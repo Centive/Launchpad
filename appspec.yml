@@ -3,20 +3,20 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /opt/piggymind/launchpad/
+    destination: /opt/centive/launchpad/
   - source: /extras/systemd/launchpad.service
     destination: /etc/systemd/system/
   - source: /extras/nginx/launchpad
     destination: /etc/nginx/sites-available/
 permissions:
-  - object: /opt/piggymind/launchpad/
+  - object: /opt/centive/launchpad/
     pattern: "**"
     owner: ubuntu
     group: www-data
     type:
       - directory
       - file
-  - object: /opt/piggymind/launchpad/extras/
+  - object: /opt/centive/launchpad/extras/
     pattern: "*.sh"
     mode: 744
   - object: /etc/systemd/system/launchpad.service

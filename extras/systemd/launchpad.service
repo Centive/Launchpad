@@ -1,9 +1,9 @@
 [Unit]
-Description = Piggymind Compass Service
+Description = Centive Launchpad Service
 
 [Service]
 ExecStartPre = /bin/bash -c 'mkdir -p /run/uwsgi; chown ubuntu:www-data /run/uwsgi'
-ExecStart = /usr/local/bin/uwsgi --emperor /opt/piggymind/compass/extras/uwsgi
+ExecStart = /usr/local/bin/uwsgi --emperor /opt/centive/launchpad/extras/uwsgi
 Restart = always
 KillSignal = SIGQUIT
 Type = notify
