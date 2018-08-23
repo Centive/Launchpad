@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx" class="js">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Softnio">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="ICO Crypto is a modern and elegant landing page, created for ICO Agencies and digital crypto currency investment website.">
+
+    <link rel="shortcut icon" href="{% static 'accounts/img/brand/cropped-favicon-centive-1-32x32.png' %}">
+    <title>{% block title %}Centive{% endblock title %}</title>
+
+    {% block css-loads %}
+        <!-- Vendor Bundle CSS -->
+        <link rel="stylesheet" href="{% static 'accounts/css/bootstrap.min.css' %}">
+        <!-- Custom styles for this template -->
+        <link rel="stylesheet" href="{% static 'accounts/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'accounts/css/theme.css' %}">
+        <link href="{% static 'accounts/css/plugins/toastr/toastr.min.css' %}" rel="stylesheet">
+
+        <link href="{% static 'accounts/css/custom.css' %}" rel="stylesheet">
+    {% endblock css-loads %}
+</head>
+
+<body id="{% block body-id %}{% endblock body-id %}" class="theme-light io-light-pro theme-lavendar io-lavendar {% block body-class %}{% endblock body-class %}" data-spy="scroll" data-target="#mainnav" data-offset="80">
+
+    {% block body-content %}{% endblock body-content %}
+
+    {% block js-loads %}
+        <script src="{% static 'accounts/js/jquery.bundle.js' %}"></script>
+        <script src="{% static 'accounts/js/bootstrap.min.js' %}"></script>
+	    <script src="{% static 'accounts/js/script.js' %}"></script>
+        <script src="{% static 'accounts/js/plugins/toastr/toastr.min.js' %}"></script>
+        <script src="{% static 'accounts/js/custom.js' %}"></script>
+
+        {% if messages %}
+            <script>
+                {% for message in messages %}
+                    toastr['{{ message.tags }}']('{{ message }}');
+                {% endfor %}
+            </script>
+        {% endif %}
+    {% endblock js-loads %}
+</body>
+</html>

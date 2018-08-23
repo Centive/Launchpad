@@ -1,0 +1,4 @@
+virtenv
+.idea
+__pycache__/
+local.env

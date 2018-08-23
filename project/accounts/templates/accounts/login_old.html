@@ -1,0 +1,58 @@
+{% extends 'accounts/body_base.html' %}
+{% block title %}Login - {{ block.super }}{% endblock title %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block js-loads %}
+    {{ block.super }}
+    <script src="{% static 'accounts/js/particles/particles.min.js' %}"></script>
+    <script>
+        particlesJS.load('particles-js', '{% static "accounts/js/particles/particles.json" %}');
+
+        $(document).ready(function () {
+            $('#id_email').focus();
+        });
+    </script>
+{% endblock js-loads %}
+
+{% block body-content %}
+    <div id="particles-js" style="position:fixed; height:100%; width:100%;"></div>
+    <div class="row middle-box-flex">
+        <div class="col-lg-3 p-m">
+            <div class="widget text-center no-padding">
+                <div class="p-m">
+                    <img src="{% static 'accounts/img/brand/piggymind_logo_light.png' %}" style="width:100%;">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 p-m">
+            <hr class="vertical-line" style="height:250px;"/>
+        </div>
+        <div class="col-lg-3 p-m">
+            <div class="widget no-padding gray-bg">
+                <div class="p-m">
+                    <h2>Login</h2>
+                    <div class="m-t-lg">
+                        {% crispy login_form %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 p-m">
+            <hr class="vertical-line" style="height:250px;"/>
+        </div>
+        <div class="col-lg-3 p-m">
+            <div class="widget no-padding">
+                <div class="row middle-box-flex p-m">
+                    <div class="col-lg-2 text-white">
+                        <h2>or</h2>
+                    </div>
+                    <div class="col-lg-10">
+                        <a href="{% url 'accounts:signup-prelim' %}"><button class="btn btn-success btn-lg" type="button">Create a new account <i class="fa fa-hand-peace-o"></i></button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body-content %}

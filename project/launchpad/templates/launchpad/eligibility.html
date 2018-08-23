@@ -1,0 +1,110 @@
+{% extends 'launchpad/body_base.html' %}
+{% block title %}Eligibility Check - {{ block.super }}{% endblock title %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% load gravatar %}
+
+{% block js-loads %}
+    {{ block.super }}
+    <script>
+        jQuery(document).ready(function($) {
+            $('#eligibility-check-submit').prop('disabled', true);
+            $('#eligibility-message').show();
+
+            var _check_consent = function (){
+                if($('#eligibility-check-1').prop('checked')
+                    && $('#eligibility-check-2').prop('checked')
+                    && $('#eligibility-check-3').prop('checked')){
+                    $('#eligibility-check-submit').prop('disabled', false);
+                    $('#eligibility-message').hide();
+                } else {
+                    $('#eligibility-check-submit').prop('disabled', true);
+                    $('#eligibility-message').show();
+                }
+            };
+
+            $('#eligibility-check-1, #eligibility-check-2, #eligibility-check-3').on('change', function(){
+                _check_consent();
+            });
+        });
+    </script>
+{% endblock js-loads %}
+
+{% block body-content %}
+    <div class="user-page d-flex">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="{% static 'launchpad/img/brand/logo-centive-color.png' %}" border="0">
+                        </div>
+                        <div class="col-md-10 text-right">
+                            <div class="d-inline-block pull-right mr-1">
+                                <div class="font-weight-bold">{{ user.email }}</div>
+                                <div class="font-weight-bold"><a href="{% url 'accounts:logout' %}">Logout</a></div>
+                            </div>
+                            <div class="d-inline pull-right">
+                                <img src="{% gravatar_url user.email 55 %}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-pro-box mt-2 shadow-sm border">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="p-5">
+                                    <div>
+                                        <h4>Please confirm after reading carefully:</h4>
+                                        <div class="row mt-4">
+                                            <div class="col-lg-1">
+                                                <label class="switch switch_type1" role="switch">
+                                                    <input type="checkbox" id="eligibility-check-1" class="switch__toggle">
+                                                    <span class="switch__label"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                I confirm that I am not a citizen, resident or located in the United States, including American Samoa, Guam, Northern Mariana Islands, Puerto Rico, U.S. Virgin Islands, or any entity organized or incorporated under the laws of the United States, DPRK, Ethiopia, Iran, Iraq, Syria, Tunisia, Afghanistan, Yemen, the Cayman Islands, or to any other state, country or other jurisdiction in which it is impermissible or restricted to offer, distribute, purchase, sell or retain Centive tokens.
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4 border-top pt-4">
+                                            <div class="col-lg-1">
+                                                <label class="switch switch_type1" role="switch">
+                                                    <input type="checkbox" id="eligibility-check-2" class="switch__toggle">
+                                                    <span class="switch__label"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                I declare and certify having carried out research or taken relevant advice from specialised attorneys to ensure that no legislation or regulation applicable to my situation and my place of residence, or no position or recommendation from a competent national authority prohibits me or limits me in the purchase and the posession of Centive tokens, and more widely.
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4 border-top pt-4">
+                                            <div class="col-lg-1">
+                                                <label class="switch switch_type1" role="switch">
+                                                    <input type="checkbox" id="eligibility-check-3" class="switch__toggle">
+                                                    <span class="switch__label"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-9">
+                                                I confirm that I have read and understood the Terms &amp; Conditions and the Whitepaper, and that I expressly accept all terms, conditions, obligations, affirmations, representations and warranties described in these documents and agree to bound by them.
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-4 border-top pt-4 middle-box-flex">
+                                            <div class="col-lg-2">
+                                                {% crispy eligibility_form %}
+                                            </div>
+                                            <div class="col-lg-9">
+                                                <p id="eligibility-message" class="text-danger">&nbsp;&#9654;&nbsp;&nbsp;Please review and confirm all the conditions before proceeding.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body-content %}

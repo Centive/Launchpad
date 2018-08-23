@@ -1,0 +1,75 @@
+hr.vertical-line {
+    border : 0;
+    height : 100%;
+    width : 2px;
+    background-image: -webkit-linear-gradient(top, transparent, #C0C0C0, transparent);
+    background-image: -moz-linear-gradient(top, transparent, #C0C0C0, transparent);
+    background-image: -ms-linear-gradient(top, transparent, #C0C0C0, transparent);
+    background-image: -o-linear-gradient(top, transparent, #C0C0C0, transparent);
+    background-image: linear-gradient(top, transparent, #C0C0C0, transparent);
+}
+
+.middle-box-flex {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    color: #000;
+    font-weight: 600;
+}
+
+input[type="password"] {
+    font: small-caption;
+    font-size: 18px;
+}
+
+.password_strength_info.hidden {
+    display: block !important;
+    visibility: hidden !important;
+}
+
+#div_id_password .password_strength_info {
+    display: none !important;
+}
+
+.progress-bar-warning {
+    background-color: orange;
+}
+
+.progress-bar-danger {
+    background-color: red;
+}
+
+.progress-bar-success {
+    background-color: green;
+}
+
+.form-plain-field {
+    padding-left: 12px;
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+label {
+    font-weight: inherit;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+#toast-container.toast-bottom-center>div, #toast-container.toast-top-center>div {
+    width: 500px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 900;
+}

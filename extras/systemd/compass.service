@@ -1,0 +1,13 @@
+[Unit]
+Description = Piggymind Compass Service
+
+[Service]
+ExecStartPre = /bin/bash -c 'mkdir -p /run/uwsgi; chown ubuntu:www-data /run/uwsgi'
+ExecStart = /usr/local/bin/uwsgi --emperor /opt/piggymind/compass/extras/uwsgi
+Restart = always
+KillSignal = SIGQUIT
+Type = notify
+NotifyAccess = all
+
+[Install]
+WantedBy = multi-user.target

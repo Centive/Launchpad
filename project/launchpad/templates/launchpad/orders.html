@@ -1,0 +1,68 @@
+{% extends 'launchpad/body_base.html' %}
+{% block title %}Payment - {{ block.super }}{% endblock title %}
+
+{% load static %}
+{% load gravatar %}
+{% load humanize %}
+
+{% block js-loads %}
+    {{ block.super }}
+{% endblock js-loads %}
+
+{% block body-content %}
+    <div class="user-page d-flex">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="{% static 'launchpad/img/brand/logo-centive-color.png' %}" border="0">
+                        </div>
+                        <div class="col-md-10 text-right">
+                            <div class="d-inline-block mr-1">
+                                <div class="font-weight-bold">{{ user.email }}</div>
+                                <div class="font-weight-bold"><a href="{% url 'accounts:logout' %}">Logout</a></div>
+                            </div>
+                            <div class="d-inline">
+                                <img src="{% gravatar_url user.email 55 %}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-pro-box mt-2 shadow-sm border">
+                        <div class="topnav" id="top-nav">
+                            <a href="{% url 'launchpad:home' %}">Home</a>
+                            <a href="{% url 'launchpad:orders' %}" class="active">Orders</a>
+                            <a href="#contact">Transactions</a>
+                            <a href="#about">Verification</a>
+                            <a href="javascript:void(0);" class="icon" onclick="dynamicTopNav()">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="p-5">
+                                    <div>
+                                        <h4>Orders</h4>
+                                        <div class="row mt-4">
+                                            <div class="col-lg-12">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <th>Date</th>
+                                                        <th>US Dollar</th>
+                                                        <th>Total XTV</th>
+                                                        <th>Payment Info</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body-content %}

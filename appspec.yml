@@ -1,0 +1,40 @@
+# appspec.yml for use with AWS CodeDeploy.
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/piggymind/launchpad/
+  - source: /extras/systemd/launchpad.service
+    destination: /etc/systemd/system/
+  - source: /extras/nginx/launchpad
+    destination: /etc/nginx/sites-available/
+permissions:
+  - object: /opt/piggymind/launchpad/
+    pattern: "**"
+    owner: ubuntu
+    group: www-data
+    type:
+      - directory
+      - file
+  - object: /opt/piggymind/launchpad/extras/
+    pattern: "*.sh"
+    mode: 744
+  - object: /etc/systemd/system/launchpad.service
+    owner: root
+    group: root
+  - object: /etc/nginx/sites-available/launchpad
+    owner: root
+    group: root
+hooks:
+  ApplicationStop:
+    - location: extras/hooks/application-stop.sh
+      timeout: 180
+  BeforeInstall:
+    - location: extras/hooks/before-install.sh
+      timeout: 600
+  AfterInstall:
+    - location: extras/hooks/after-install.sh
+      timeout: 600
+  ApplicationStart:
+    - location: extras/hooks/application-start.sh
+      timeout: 180
