@@ -1,5 +1,5 @@
 {% extends 'launchpad/body_base.html' %}
-{% block title %}Orders - {{ block.super }}{% endblock title %}
+{% block title %}Transactions - {{ block.super }}{% endblock title %}
 
 {% load static %}
 {% load gravatar %}
@@ -31,8 +31,8 @@
                     <div class="user-pro-box mt-2 shadow-sm border">
                         <div class="topnav" id="top-nav">
                             <a href="{% url 'launchpad:home' %}">Home</a>
-                            <a href="{% url 'launchpad:orders' %}" class="active">Orders</a>
-                            <a href="{% url 'launchpad:transactions' %}">Transactions</a>
+                            <a href="{% url 'launchpad:orders' %}">Orders</a>
+                            <a href="{% url 'launchpad:transactions' %}" class="active">Transactions</a>
                             <a href="{% url 'launchpad:verification' %}">Verification</a>
                             <a href="javascript:void(0);" class="icon" onclick="dynamicTopNav()">
                                 <i class="fa fa-bars"></i>
@@ -42,38 +42,32 @@
                             <div class="col-md-12">
                                 <div class="p-5">
                                     <div>
-                                        <h4>Your Orders</h4>
+                                        <h4>Transactions</h4>
                                         <div class="row mt-4">
                                             <div class="col-lg-12">
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
                                                             <th scope="col">Date</th>
-                                                            <th scope="col" class="text-right">Want to Buy</th>
-                                                            <th scope="col" class="text-right">Total Price</th>
-                                                            <th scope="col" class="text-right">Pay Using</th>
-                                                            <th scope="col" class="text-center">Payment</th>
-                                                            <th scope="col" class="text-right">Order Status</th>
+                                                            <th scope="col" class="text-center">Type</th>
+                                                            <th scope="col" class="text-right">No. of Tokens</th>
+                                                            <th scope="col" class="text-right">Reference</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    {% for order in orders %}
+                                                    {% for transaction in transactions %}
                                                         <tr>
-                                                            <td scope="row">{{ order.created_at|date }}</td>
-                                                            <td class="text-right">{{ order.token_value.normalize|intcomma }} XTV</td>
-                                                            <td class="text-right">US${{ order.usd_value.normalize|intcomma }}</td>
-                                                            <td class="text-right">{{ order.payment_currency_value.normalize|intcomma }} {{ order.payment_currency }}</td>
-                                                            <td class="text-center"><i class="fa fa-question-circle"></i> <a href="{% url 'launchpad:payment' order_id=order.token_order_external_id %}">Instructions</a>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fa fa-info-circle"></i> <a href="{{ order.status_url }}" target="_blank">Status</a></td>
+                                                            <td scope="row">{{ transaction.created_at|date }}</td>
+                                                            <td class="text-center">{{ transaction.transaction_type }}</td>
+                                                            <td class="text-right">{{ transaction.token_value.normalize|intcomma }} XTV</td>
                                                             <td class="text-right">
-                                                                {% if order.payment_received and order.tokens_credited %}
-                                                                    <div class="text-success">Order complete</div>
-                                                                {% else %}
-                                                                    <div class="text-danger">Pending</div>
+                                                                {% if transaction.txn_id and transaction.txn_id != '' %}
+                                                                    <a href="https://etherscan.io/tx/{{ transaction.txn_id }}">Transaction ID</a>
                                                                 {% endif %}
                                                             </td>
                                                         </tr>
                                                     {% empty %}
-                                                        <td colspan="6" class="text-center">You have not made any orders yet. <a href="{% url 'launchpad:buy' %}">Buy tokens now</a></td>
+                                                        <td colspan="4" class="text-center">No transactions are found in your account.</td>
                                                     {% endfor %}
                                                     </tbody>
                                                 </table>

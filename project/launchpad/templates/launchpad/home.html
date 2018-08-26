@@ -3,6 +3,7 @@
 
 {% load static %}
 {% load gravatar %}
+{% load humanize %}
 
 {% block js-loads %}
     {{ block.super }}
@@ -31,8 +32,8 @@
                         <div class="topnav" id="top-nav">
                             <a href="{% url 'launchpad:home' %}" class="active">Home</a>
                             <a href="{% url 'launchpad:orders' %}">Orders</a>
-                            <a href="#contact">Transactions</a>
-                            <a href="#about">Verification</a>
+                            <a href="{% url 'launchpad:transactions' %}">Transactions</a>
+                            <a href="{% url 'launchpad:verification' %}">Verification</a>
                             <a href="javascript:void(0);" class="icon" onclick="dynamicTopNav()">
                                 <i class="fa fa-bars"></i>
                             </a>
@@ -50,7 +51,13 @@
                                             <div class="position-relative col-centered middle-box-flex">
                                                 <div class="balance-circle bg-white shadow-sm"></div>
                                                 <div class="position-absolute" style="width:100%;">
-                                                    <h1 class="font-weight-bold text-center">100,000</h1>
+                                                    <h1 class="font-weight-bold text-center">
+                                                        {% if token_holdings.token_value__sum %}
+                                                            {{ token_holdings.token_value__sum.normalize|intcomma }}
+                                                        {% else %}
+                                                            0
+                                                        {% endif %}
+                                                    </h1>
                                                     <h4 class="font-weight-bold text-center">XTV</h4>
                                                 </div>
                                             </div>
@@ -60,11 +67,11 @@
                                         </div>
                                         <div class="col-md-4 text-center">
                                             <div>
-                                                <button class="col-centered btn btn-alt btn-lg btn-encourage">Buy Tokens</button>
+                                                <a href="{% url 'launchpad:buy' %}"><button class="col-centered btn btn-alt btn-lg btn-encourage">Buy Tokens</button></a>
                                             </div>
                                             {% if pending_orders %}
                                                 <div class="mt-3">
-                                                    You have <a href="#"><b>{{ pending_orders|length }} pending order{{ pending_orders|length|pluralize:',s' }}</b></a>
+                                                    You have <a href="{% url 'launchpad:orders' %}"><b>{{ pending_orders|length }} pending order{{ pending_orders|length|pluralize:',s' }}</b></a>
                                                 </div>
                                             {% endif %}
                                         </div>

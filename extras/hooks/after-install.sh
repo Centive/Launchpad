@@ -10,6 +10,7 @@ ${x;/^$/{s//deploy_env = '"${DEPLOYMENT_GROUP_NAME,,}"'/;H};x}' /opt/centive/lau
 # Install Python 3.6 and create virtual environment
 sudo apt-get install python3.6 python3.6-venv -y
 sudo apt-get install build-essential libssl-dev libffi-dev python3.6-dev -y
+curl https://bootstrap.pypa.io/get-pip.py | sudo python3.6
 sudo -H pip3.6 install uwsgi
 sudo -H pip3.6 install --upgrade pip
 cd /home/ubuntu
@@ -41,4 +42,4 @@ unset LAUNCHPAD_CONFIG_FILE
 # Deactivate virtual environment
 deactivate
 
-sudo ln -sf /etc/nginx/sites-available/launchpad /etc/nginx/sites-enabled
+sudo ln -sf /etc/nginx/sites-available/centive /etc/nginx/sites-enabled

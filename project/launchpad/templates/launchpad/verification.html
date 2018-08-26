@@ -1,35 +1,65 @@
 {% extends 'launchpad/body_base.html' %}
-{% block title %}Buy XTV - {{ block.super }}{% endblock title %}
+{% block title %}Verification - {{ block.super }}{% endblock title %}
 
 {% load static %}
-{% load crispy_forms_tags %}
 {% load gravatar %}
+{% load humanize %}
 
 {% block js-loads %}
     {{ block.super }}
-    <script src="{% static 'launchpad/js/plugins/jquery-animate-numbers/jquery.animateNumbers.min.js' %}"></script>
+    <script src="{{ sumsub.host }}/idensic/static/idensic.js"></script>
     <script>
-        jQuery(document).ready(function($) {
-            $('#id_usd_value').keypress(function (e){
-                //if the letter is not digit then don't type anything
-                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-                    return false;
+        var id = idensic.init(
+            '#kyc-container',
+            {
+                accessToken: "{{ sumsub.token }}",
+                lang: "en",
+                applicantDataPage: {
+                    "enabled": true,
+                    "fields": [
+                        {
+                            "name": "firstName",
+                            "required": true
+                        },
+                        {
+                            "name": "lastName",
+                            "required": true
+                        },
+                        {
+                            "name": "phone",
+                            "required": true
+                        }
+                    ]
+                },
+                requiredDocuments: "IDENTITY:PASSPORT,ID_CARD,DRIVERS;SELFIE:SELFIE;PROOF_OF_RESIDENCE:UTILITY_BILL",
+                excludedCountries: [
+                    "USA",
+                    "UMI",
+                    "ASM",
+                    "GUM",
+                    "MNP",
+                    "PRI",
+                    "VIR",
+                    "PRK",
+                    "ETH",
+                    "IRN",
+                    "IRQ",
+                    "SYR",
+                    "TUN",
+                    "AFG",
+                    "YEM",
+                    "CYM"
+                ],
+                helpUrl: "https://centive.org",
+                uiConf: {
+                    "customLogoUrl": "https://centive.org/wp-content/uploads/2018/06/logo-centive-black.png"
                 }
-            });
-
-            $('#id_usd_value').on('input propertychange paste', function (){
-                var tokenCount = parseFloat($(this).val()) * 10;
-
-                if(isNaN(tokenCount) || tokenCount < 1000){
-                    tokenCount = 1000;
-                    $('#minimum-message').show();
-                } else {
-                    $('#minimum-message').hide();
-                }
-
-                $('#token-receive-estimate').animateNumbers(tokenCount, true, 400);
-            });
-        });
+            },
+            // function for the iframe callbacks
+            function (messageType, payload) {
+                console.log('[IDENSIC DEMO] Idensic message:', messageType, payload);
+            }
+        );
     </script>
 {% endblock js-loads %}
 
@@ -55,9 +85,9 @@
                     <div class="user-pro-box mt-2 shadow-sm border">
                         <div class="topnav" id="top-nav">
                             <a href="{% url 'launchpad:home' %}">Home</a>
-                            <a href="{% url 'launchpad:orders' %}" class="active">Orders</a>
+                            <a href="{% url 'launchpad:orders' %}">Orders</a>
                             <a href="{% url 'launchpad:transactions' %}">Transactions</a>
-                            <a href="{% url 'launchpad:verification' %}">Verification</a>
+                            <a href="{% url 'launchpad:verification' %}" class="active">Verification</a>
                             <a href="javascript:void(0);" class="icon" onclick="dynamicTopNav()">
                                 <i class="fa fa-bars"></i>
                             </a>
@@ -66,10 +96,9 @@
                             <div class="col-md-12">
                                 <div class="p-5">
                                     <div>
-                                        <h4>Buy Tokens</h4>
-                                        <div class="row mt-4">
+                                        <div class="row">
                                             <div class="col-lg-12">
-                                                {% crispy buy_form %}
+                                                <div id="kyc-container"></div>
                                             </div>
                                         </div>
                                     </div>

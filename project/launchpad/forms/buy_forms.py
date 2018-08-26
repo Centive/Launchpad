@@ -18,9 +18,6 @@ class BuyForm(forms.Form):
                     css_class='col-lg-4',
                 ),
                 Div(
-                    css_class='col-lg-1',
-                ),
-                Div(
                     HTML('<div>You will receive</div>'),
                     css_class='col-lg-4',
                 ),
@@ -36,20 +33,20 @@ class BuyForm(forms.Form):
                 ),
                 Div(
                     Div(
-                        HTML('<h1 class="text-muted">&#9654;</h1>'),
+                        HTML('<h1><span class="text-muted">&#9654;</span> <a id="token-receive-estimate">10,000</a> <small><b>XTV</b></small></h1>'),
                     ),
-                    css_class='col-lg-1',
-                ),
-                Div(
-                    HTML('<h1><a id="token-receive-estimate">10,000</a> <small><b>XTV</b></small></h1>'),
-                    css_class='col-lg-4',
+                    Div(
+                        HTML('<p id="minimum-message" class="text-danger" style="display:none;">for a minimum purchase of US$100</p>'),
+                        style='height: 20px;'
+                    ),
+                    css_class='col-lg-5',
                 ),
                 css_class='row'
             ),
             Div(
                 Div(
                     HTML('<div>How do you want to pay?</div>'),
-                    css_class='col-lg-4',
+                    css_class='col-lg-4 mt-2',
                 ),
                 css_class='row'
             ),
@@ -74,10 +71,12 @@ class BuyForm(forms.Form):
     usd_value = forms.FloatField(label='', initial=1000, required=True)
     payment_currency = forms.ChoiceField(label='', required=True, choices=(
         ('BTC', "BTC - Bitcoin"),
-        ('ETH', "ETH - Ethereum"),
         ('BCH', "BCH - Bitcoin Cash"),
+        ('ETH', "ETH - Ethereum"),
+        ('ETC', "ETC - Ethereum Classic"),
+        ('DASH', "DASH - Dash"),
         ('LTC', "LTC - Litecoin"),
-        ('XRP', "XRP - Ripple"),
+        ('TRX', "TRX - Tronix"),
     ))
 
     def clean(self):
@@ -89,6 +88,6 @@ class BuyForm(forms.Form):
             raise forms.ValidationError("A minimum purchase of US$ 100 is required")
 
         if _payment_currency not in _accepted_currencies:
-            raise forms.ValidationError("Chosen coin cannot be accepted for payment")
+            raise forms.ValidationError("The coin you chose cannot be accepted for payment")
 
         return self.cleaned_data

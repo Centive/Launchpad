@@ -10,4 +10,6 @@ urlpatterns = [
     path('buy/', views.buy.buy, name='buy'),
     path('payment/<slug:order_id>/', views.payment.payment, name='payment'),
     path('orders/', views.orders.orders, name='orders'),
+    path('transactions/', views.transactions.transactions, name='transactions'),
+    path('verification/', views.verification.verification, name='verification'),
 ]

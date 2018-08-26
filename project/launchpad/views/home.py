@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from launchpad.models import TermsPolicyRepo, UserTermsRegistry, TokenOrders
+from launchpad.models import TermsPolicyRepo, UserTermsRegistry, TokenOrders, TokenTransactions
 
 
 @login_required
@@ -17,4 +17,11 @@ def home(request):
 
     else:
         _pending_orders = TokenOrders.objects.token_orders(customer_external_id=_user_id_external).pending()
-        return render(request, 'launchpad/home.html', {'pending_orders': _pending_orders})
+        _token_holdings = TokenTransactions.objects.token_transactions(
+            customer_external_id=_user_id_external
+        ).total_holdings()
+
+        return render(request, 'launchpad/home.html', {
+            'pending_orders': _pending_orders,
+            'token_holdings': _token_holdings,
+        })

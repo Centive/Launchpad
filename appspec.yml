@@ -6,7 +6,7 @@ files:
     destination: /opt/centive/launchpad/
   - source: /extras/systemd/launchpad.service
     destination: /etc/systemd/system/
-  - source: /extras/nginx/launchpad
+  - source: /extras/nginx/centive
     destination: /etc/nginx/sites-available/
 permissions:
   - object: /opt/centive/launchpad/
@@ -22,7 +22,7 @@ permissions:
   - object: /etc/systemd/system/launchpad.service
     owner: root
     group: root
-  - object: /etc/nginx/sites-available/launchpad
+  - object: /etc/nginx/sites-available/centive
     owner: root
     group: root
 hooks:
