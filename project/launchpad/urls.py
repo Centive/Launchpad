@@ -1,9 +1,11 @@
 from django.urls import path
+from django.views.generic import RedirectView
 
 from . import views
 
 app_name = 'launchpad'
 urlpatterns = [
+    path('', RedirectView.as_view(pattern_name='launchpad:home', permanent=False)),
     path('home/', views.home.home, name='home'),
     path('terms/', views.terms.terms, name='terms'),
     path('eligibility/', views.eligibility.eligibility, name='eligibility'),

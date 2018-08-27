@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import include
-from django.urls import re_path
+from django.urls import re_path, path
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/accounts/', permanent=False)),
     re_path(r'^accounts/', include('accounts.urls')),
     re_path(r'^launchpad/', include('launchpad.urls')),
     # url(r'^admin/', admin.site.urls),
