@@ -25,7 +25,7 @@ source /home/ubuntu/pyvenvs/launchpad/bin/activate
 pip install --upgrade pip
 # Install setuptools & distribute
 pip install -U setuptools
-pip install -U distribute
+#pip install -U distribute
 # Resolve dependencies
 pip install -r /opt/centive/launchpad/requirements.txt
 # Export the config file path temporarily
