@@ -44,7 +44,7 @@
                                     <div>
                                         <h4>Your Orders</h4>
                                         <div class="row mt-4">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-12 pre-scrollable">
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
@@ -59,12 +59,12 @@
                                                     <tbody>
                                                     {% for order in orders %}
                                                         <tr>
-                                                            <td scope="row">{{ order.created_at|date }}</td>
-                                                            <td class="text-right">{{ order.token_value.normalize|intcomma }} XTV</td>
-                                                            <td class="text-right">US${{ order.usd_value.normalize|intcomma }}</td>
-                                                            <td class="text-right">{{ order.payment_currency_value.normalize|intcomma }} {{ order.payment_currency }}</td>
-                                                            <td class="text-center"><i class="fa fa-question-circle"></i> <a href="{% url 'launchpad:payment' order_id=order.token_order_external_id %}">Instructions</a>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fa fa-info-circle"></i> <a href="{{ order.status_url }}" target="_blank">Status</a></td>
-                                                            <td class="text-right">
+                                                            <td scope="row" class="text-nowrap">{{ order.created_at|date }}</td>
+                                                            <td class="text-right text-nowrap">{{ order.token_value.normalize|intcomma }} XTV</td>
+                                                            <td class="text-right text-nowrap">US${{ order.usd_value.normalize|intcomma }}</td>
+                                                            <td class="text-right text-nowrap">{{ order.payment_currency_value.normalize|intcomma }} {{ order.payment_currency }}</td>
+                                                            <td class="text-center text-nowrap"><i class="fa fa-question-circle"></i> <a href="{% url 'launchpad:payment' order_id=order.token_order_external_id %}">Instructions</a>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fa fa-info-circle"></i> <a href="{{ order.status_url }}" target="_blank">Status</a></td>
+                                                            <td class="text-right text-nowrap">
                                                                 {% if order.payment_received and order.tokens_credited %}
                                                                     <div class="text-success">Order complete</div>
                                                                 {% else %}

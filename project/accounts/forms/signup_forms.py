@@ -19,7 +19,7 @@ class SignupPrelimForm(forms.Form):
             ),
             Div(
                 HTML(
-                    'Already have an investor account? <a href="/accounts/login/">Login here</a>',
+                    'Already have an account?&nbsp;&nbsp;&#9654; <a href="/accounts/login/"><b>Login here</b></a>',
                 ),
                 css_class='mt-5'
             ),

@@ -15,23 +15,14 @@ class BuyForm(forms.Form):
             Div(
                 Div(
                     HTML('<div>How much do you want to purchase for?</div>'),
-                    css_class='col-lg-4',
-                ),
-                Div(
-                    HTML('<div>You will receive</div>'),
-                    css_class='col-lg-4',
-                ),
-                css_class='row'
-            ),
-            Div(
-                Div(
                     Div(
                         PrependedText('usd_value', '<b>US Dollar ($)</b>', css_class='form-control-lg no-border'),
-                        css_class='mr-5'
+                        css_class='mr-lg-5 mr-sm-0',
                     ),
                     css_class='col-lg-4',
                 ),
                 Div(
+                    HTML('<div>You will receive</div>'),
                     Div(
                         HTML('<h1><span class="text-muted">&#9654;</span> <a id="token-receive-estimate">10,000</a> <small><b>XTV</b></small></h1>'),
                     ),
@@ -46,19 +37,13 @@ class BuyForm(forms.Form):
             Div(
                 Div(
                     HTML('<div>How do you want to pay?</div>'),
-                    css_class='col-lg-4 mt-2',
-                ),
-                css_class='row'
-            ),
-            Div(
-                Div(
                     Div(
                         Field('payment_currency', css_class='form-control-lg no-border'),
-                        css_class='mr-5',
+                        css_class='mr-lg-5 mr-sm-0',
                     ),
                     css_class='col-lg-4',
                 ),
-                css_class='row'
+                css_class='mt-2 row'
             ),
             Div(
                 ButtonHolder(

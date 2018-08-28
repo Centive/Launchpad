@@ -1,7 +1,6 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Div, HTML, ButtonHolder
+from crispy_forms.layout import Submit, Layout, Div, HTML, ButtonHolder, Button
 from django import forms
-from django.urls import reverse
 
 
 class SessionLoginForm(forms.Form):
@@ -21,7 +20,7 @@ class SessionLoginForm(forms.Form):
             ),
             Div(
                 HTML(
-                    'Don\'t have an investor account? <a href="/accounts/signup-prelim/">Signup here</a>',
+                    'Don\'t have a Centive account?&nbsp;&nbsp;&#9654; <a href="/accounts/signup-prelim/"><b>Signup here</b></a>',
                 ),
                 css_class='mt-5'
             ),

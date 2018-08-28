@@ -57,10 +57,10 @@
                                                     <tbody>
                                                     {% for transaction in transactions %}
                                                         <tr>
-                                                            <td scope="row">{{ transaction.created_at|date }}</td>
-                                                            <td class="text-center">{{ transaction.transaction_type }}</td>
-                                                            <td class="text-right">{{ transaction.token_value.normalize|intcomma }} XTV</td>
-                                                            <td class="text-right">
+                                                            <td scope="row" class="text-nowrap">{{ transaction.created_at|date }}</td>
+                                                            <td class="text-center text-nowrap">{{ transaction.transaction_type }}</td>
+                                                            <td class="text-right text-nowrap">{{ transaction.token_value.normalize|intcomma }} XTV</td>
+                                                            <td class="text-right text-nowrap">
                                                                 {% if transaction.txn_id and transaction.txn_id != '' %}
                                                                     <a href="https://etherscan.io/tx/{{ transaction.txn_id }}">Transaction ID</a>
                                                                 {% endif %}
