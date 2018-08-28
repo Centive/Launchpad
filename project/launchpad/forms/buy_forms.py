@@ -65,8 +65,8 @@ class BuyForm(forms.Form):
     ))
 
     def clean(self):
-        _usd_value = self.cleaned_data['usd_value']
-        _payment_currency = self.cleaned_data['payment_currency']
+        _usd_value = self.cleaned_data.get('usd_value')
+        _payment_currency = self.cleaned_data.get('payment_currency')
         _accepted_currencies = ['BTC', 'ETH', 'BCH', 'LTC', 'XRP']
 
         if _usd_value < 100:

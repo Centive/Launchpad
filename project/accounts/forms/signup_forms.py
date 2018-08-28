@@ -74,10 +74,10 @@ class SignupFinishSetupForm(forms.Form):
     # phone = forms.IntegerField(label='Local phone number')
 
     def clean(self):
-        _password_confirm = self.cleaned_data['password_confirm']
-        _password = self.cleaned_data['password']
+        _password_confirm = self.cleaned_data.get('password_confirm')
+        _password = self.cleaned_data.get('password')
 
-        if _password_confirm != _password:
+        if _password and _password_confirm != _password:
             raise forms.ValidationError("Passwords do not match")
 
         return self.cleaned_data
