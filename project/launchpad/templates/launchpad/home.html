@@ -14,30 +14,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img src="{% static 'launchpad/img/brand/logo-centive-color.png' %}" border="0">
-                        </div>
-                        <div class="col-md-10 text-right">
-                            <div class="d-inline-block mr-1">
-                                <div class="font-weight-bold">{{ user.email }}</div>
-                                <div class="font-weight-bold"><a href="{% url 'accounts:logout' %}">Logout</a></div>
-                            </div>
-                            <div class="d-inline">
-                                <img src="{% gravatar_url user.email 55 %}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="user-pro-box mt-2 shadow-sm border">
-                        <div class="topnav" id="top-nav">
-                            <a href="{% url 'launchpad:home' %}" class="active">Home</a>
-                            <a href="{% url 'launchpad:orders' %}">Orders</a>
-                            <a href="{% url 'launchpad:transactions' %}">Transactions</a>
-                            <a href="{% url 'launchpad:verification' %}">Verification</a>
-                            <a href="javascript:void(0);" class="icon" onclick="dynamicTopNav()">
-                                <i class="fa fa-bars"></i>
-                            </a>
-                        </div>
+                        {% include 'launchpad/nav_bar.html' with page_cat='home' %}
                         <div class="row">
                             <div class="col-lg-12" style="background-image: url('{% static 'launchpad/img/patterns/subtle-crisscross.jpg' %}');">
                                 <div class="p-5">

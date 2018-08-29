@@ -1,6 +1,7 @@
 import requests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from requests import RequestException
 
 from project.settings import env
 
@@ -14,16 +15,22 @@ def verification(request):
         'key': env('SUMSUB_KEY'),
     }
 
-    _sumsub_request = requests.post(
-        '/'.join([env('SUMSUB_HOST'), 'resources/accessTokens']),
-        params=_sumsub_access_token_payload
-    )
+    try:
+        _sumsub_request = requests.post(
+            '/'.join([env('SUMSUB_HOST'), 'resources/accessTokens']),
+            params=_sumsub_access_token_payload
+        )
 
-    _sumsub_response = _sumsub_request.json()
+        _sumsub_request.raise_for_status()
 
-    return render(request, 'launchpad/verification.html', {
-        'sumsub': {
-            'host': env('SUMSUB_HOST'),
-            'token': _sumsub_response['token'],
-        }
-    })
+        _sumsub_response = _sumsub_request.json()
+
+        return render(request, 'launchpad/verification.html', {
+            'sumsub': {
+                'host': env('SUMSUB_HOST'),
+                'token': _sumsub_response['token'],
+            }
+        })
+
+    except RequestException:
+        return render(request, 'launchpad/verification_unavailable.html')

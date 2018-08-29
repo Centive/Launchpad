@@ -47,9 +47,11 @@ class BuyForm(forms.Form):
             ),
             Div(
                 ButtonHolder(
-                    Submit('submit', 'Buy'),
-                    css_class='mt-3'
-                )
+                    Submit('submit', 'Buy', css_class='btn-encourage'),
+                    css_class='mt-3',
+                    css_id='buy-submit-button',
+                ),
+                HTML('<div id="buy-loading-spinner" class="mt-3" style="display: none;"><button class="btn btn-primary btn-encourage disabled"><i class="fa fa-spinner fa-lg fa-spin text-white"></i></button></div>'),
             ),
         )
 
