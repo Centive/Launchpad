@@ -16,7 +16,7 @@ def update(request):
         _request_body = json.loads(request.body.decode("utf-8"))
 
         _file_handle = open('/home/ubuntu/ipn.log', 'w+')
-        _file_handle.write(_request_body)
+        _file_handle.write(str(_request_body))
         _file_handle.close()
 
         return HttpResponse('OK', status=200)
