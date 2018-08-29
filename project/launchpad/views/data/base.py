@@ -5,7 +5,12 @@ from django.http import JsonResponse
 
 
 def standard_response(result=None):
-    return JsonResponse({
-        'timestamp': floor(time.time()),
-        'data': result,
-    })
+    if result:
+        return JsonResponse({
+            'timestamp': floor(time.time()),
+            'data': result,
+        })
+    else:
+        return JsonResponse({
+            'timestamp': floor(time.time()),
+        })

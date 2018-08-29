@@ -26,16 +26,16 @@ def update(request):
 
                 try:
                     with transaction.atomic():
-                        _order = TokenOrders.objects.order_from_txn(txn_id=_txn_id)
-                        _order.status = _status
-                        _order.status_text = str(_status_text)
+                        _order = TokenOrders.objects.order_from_txn(txn_id=_txn_id).get()
+                        _order.payment_status = _status
+                        _order.payment_status_text = _status_text
 
                         if _status >= 1:
                             if not _order.tokens_credited:
                                 _transaction = TokenTransactions(
                                     token_transaction_external_id=token_urlsafe(32),
                                     customer_external_id=_order.customer_external_id,
-                                    transaction_type='deposit',
+                                    transaction_type='Deposit',
                                     token_value=_order.token_value,
                                 )
 
