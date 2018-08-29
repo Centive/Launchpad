@@ -13,10 +13,10 @@ def update(request):
         _param_errors = []
         _params = {}
 
-        _request_body = json.loads(request.body.decode("utf-8"))
+        # _request_body = json.loads(request.body.decode("utf-8"))
 
         _file_handle = open('/home/ubuntu/ipn.log', 'w+')
-        _file_handle.write(str(_request_body))
+        _file_handle.write(str(request.POST))
         _file_handle.close()
 
         return HttpResponse('OK', status=200)
