@@ -68,7 +68,16 @@ class BuyForm(forms.Form):
     def clean(self):
         _usd_value = self.cleaned_data.get('usd_value')
         _payment_currency = self.cleaned_data.get('payment_currency')
-        _accepted_currencies = ['BTC', 'ETH', 'BCH', 'LTC', 'XRP']
+        _accepted_currencies = [
+            'BTC',
+            'BCH',
+            'ETH',
+            'ETC',
+            'DASH',
+            'LTC',
+            'TRX',
+            'LTCT',
+        ]
 
         if _usd_value < 100:
             raise forms.ValidationError("A minimum purchase of US$ 100 is required")
