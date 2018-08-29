@@ -15,4 +15,5 @@ urlpatterns = [
     path('orders/', views.orders.orders, name='orders'),
     path('transactions/', views.transactions.transactions, name='transactions'),
     path('verification/', views.verification.verification, name='verification'),
+    path('data/payment/update/', views.data.payment.update, name='data-payment-update'),
 ]

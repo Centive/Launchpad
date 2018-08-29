@@ -62,6 +62,7 @@ class BuyForm(forms.Form):
         ('DASH', "DASH - Dash"),
         ('LTC', "LTC - Litecoin"),
         ('TRX', "TRX - Tronix"),
+        ('LTCT', "LTCT - Litecoin Testnet"),
     ))
 
     def clean(self):
