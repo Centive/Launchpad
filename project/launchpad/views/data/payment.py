@@ -1,11 +1,13 @@
 import json
 
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from launchpad.views.data.base import standard_response
 from project.settings import env
 
 
+@csrf_exempt
 def update(request):
     if request.method == 'POST':
         _param_errors = []
