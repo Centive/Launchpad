@@ -21,13 +21,13 @@ def update(request):
         if not _param_errors:
             if request.POST.get('ipn_type') == 'api':
                 _txn_id = request.POST.get('txn_id')
-                _status = request.POST.get('status')
+                _status = int(request.POST.get('status'))
                 _status_text = request.POST.get('status_text')
 
                 try:
                     with transaction.atomic():
                         _order = TokenOrders.objects.order_from_txn(txn_id=_txn_id)
-                        _order.status = int(_status)
+                        _order.status = _status
                         _order.status_text = str(_status_text)
 
                         if _status >= 1:
