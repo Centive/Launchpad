@@ -1,6 +1,7 @@
 import json
 from secrets import token_urlsafe
 
+from anymail.message import AnymailMessage
 from django.db import transaction, IntegrityError
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -14,6 +15,7 @@ from project.settings import env
 def update(request):
     if request.method == 'POST':
         _param_errors = []
+        _send_email = False
 
         if 'merchant' not in request.POST or request.POST.get('merchant') != env('COINPAYMENTS_MERCHANT_ID'):
             _param_errors.append('merchant')
@@ -23,6 +25,7 @@ def update(request):
                 _txn_id = request.POST.get('txn_id')
                 _status = int(request.POST.get('status'))
                 _status_text = request.POST.get('status_text')
+                _email = request.POST.get('email')
 
                 try:
                     with transaction.atomic():
@@ -40,11 +43,26 @@ def update(request):
                                 )
 
                                 _transaction.save()
+                                _send_email = True
 
                             _order.payment_received = True
                             _order.tokens_credited = True
 
                         _order.save()
+
+                        if _send_email:
+                            _message = AnymailMessage(
+                                to=[_email],
+                                tags=['Orders']
+                            )
+                            _message.template_id = 'a33525c2-8c99-4f8e-b7cd-b943e874c318'
+                            _message.merge_global_data = {
+                                'token_value': ' '.join([str("{:,.2f}".format(float(_order.token_value))), 'XTV']),
+                            }
+                            _message.metadata = {'payment-address': _order.payment_address}
+                            _message.track_clicks = True
+
+                            _message.send()
 
                         return standard_response()
 

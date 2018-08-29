@@ -1,6 +1,7 @@
 import random
 from secrets import token_urlsafe
 
+from anymail.message import AnymailMessage
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
@@ -68,6 +69,23 @@ def buy(request):
             _token_order.qrcode_url = _cp_transaction.qrcode_url
 
             _token_order.save()
+
+            _message = AnymailMessage(
+                to=[_user_email],
+                tags=['Orders']
+            )
+            _message.template_id = '9125877d-e602-4375-8ad2-74dbad9ec04d'
+            _message.merge_global_data = {
+                'token_value': ' '.join([str("{:,.2f}".format(float(_token_value))), 'XTV']),
+                'confirms_needed': _cp_transaction.confirms_needed,
+                'payment_currency_value': ' '.join([str(_cp_transaction.amount), _payment_currency]),
+                'payment_address': _cp_transaction.address,
+                'status_url': _cp_transaction.status_url,
+            }
+            _message.metadata = {'payment-address': _cp_transaction.address}
+            _message.track_clicks = True
+
+            _message.send()
 
             return redirect('launchpad:payment', order_id=_token_order_external_id)
 
