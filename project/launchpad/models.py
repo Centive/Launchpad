@@ -69,6 +69,8 @@ class TokenOrders(models.Model):
     timeout = models.IntegerField(null=True)
     status_url = models.CharField(max_length=255, null=True)
     qrcode_url = models.CharField(max_length=255, null=True)
+    payment_status = models.IntegerField(null=True)
+    payment_status_text = models.CharField(max_length=255, null=True)
     payment_received = models.BooleanField(null=False, default=False)
     tokens_credited = models.BooleanField(null=False, default=False)
     created_at = models.DateTimeField(auto_now_add=True)

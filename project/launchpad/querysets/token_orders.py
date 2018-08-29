@@ -11,6 +11,16 @@ class TokenOrdersQuerySet(models.query.QuerySet):
         if 'token_order_external_id' in kwargs:
             _filter_list.update(token_order_external_id__exact=kwargs['token_order_external_id'])
 
+        if 'txn_id' in kwargs:
+            _filter_list.update(txn_id__exact=kwargs['txn_id'])
+
+        return self.filter(**_filter_list)
+
+    def order_from_txn(self, **kwargs):
+        _filter_list = {
+            'txn_id__exact': kwargs['txn_id'],
+        }
+
         return self.filter(**_filter_list)
 
     def pending(self):

@@ -1,8 +1,11 @@
 import json
+from secrets import token_urlsafe
 
+from django.db import transaction, IntegrityError
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from launchpad.models import TokenOrders, TokenTransactions
 from launchpad.views.data.base import standard_response
 from project.settings import env
 
@@ -11,37 +14,45 @@ from project.settings import env
 def update(request):
     if request.method == 'POST':
         _param_errors = []
-        _params = {}
 
-        # _request_body = json.loads(request.body.decode("utf-8"))
+        if 'merchant' not in request.POST or request.POST.get('merchant') != env('COINPAYMENTS_MERCHANT_ID'):
+            _param_errors.append('merchant')
 
-        _file_handle = open('/home/ubuntu/ipn.log', 'w+')
-        _file_handle.write(str(request.POST))
-        _file_handle.close()
+        if not _param_errors:
+            if request.POST.get('ipn_type') == 'api':
+                _txn_id = request.POST.get('txn_id')
+                _status = request.POST.get('status')
+                _status_text = request.POST.get('status_text')
 
-        return HttpResponse('OK', status=200)
+                try:
+                    with transaction.atomic():
+                        _order = TokenOrders.objects.order_from_txn(txn_id=_txn_id)
+                        _order.status = int(_status)
+                        _order.status_text = str(_status_text)
 
-        # if 'merchant' not in _request_body or _request_body['merchant'] != env('COINPAYMENTS_MERCHANT_ID'):
-        #     _param_errors.append('merchant')
-        #
-        # if 'ipn_type' in _request_body:
-        #     if _request_body['ipn_type'] == 'deposit':
-        #         _address = _request_body['address']
-        #         _txn_id = _request_body['txn_id']
-        #         _status = _request_body['status']
-        #         _status_text = _request_body['status_text']
-        #
-        # if 'provider-code' in _request_body:
-        #     _params['provider_code'] = _request_body['provider-code']
-        # else:
-        #     _param_errors.append('provider-code')
-        #
-        # if not _param_errors:
-        #     # _se_customer = SaltEdgeCustomers.objects.customers(external_id=_user_id_external)[0]
-        #     # _connect_data = SaltEdgeService.create_token(_se_customer.se_customer_secret, **_params)
-        #
-        #     return standard_response(_connect_data)
-        # else:
-        #     return HttpResponse('Missing required parameters: %s' % ', '.join(_param_errors), status=400)
+                        if _status >= 1:
+                            if not _order.tokens_credited:
+                                _transaction = TokenTransactions(
+                                    token_transaction_external_id=token_urlsafe(32),
+                                    customer_external_id=_order.customer_external_id,
+                                    transaction_type='deposit',
+                                    token_value=_order.token_value,
+                                )
+
+                                _transaction.save()
+
+                            _order.payment_received = True
+                            _order.tokens_credited = True
+
+                        _order.save()
+
+                        return standard_response()
+
+                except IntegrityError:
+                    # TODO: Notify us of error
+                    return standard_response()
+
+        else:
+            return HttpResponse('Missing required parameters: %s' % ', '.join(_param_errors), status=400)
     else:
         return HttpResponse('Method Not Allowed', status=405)
