@@ -5,6 +5,11 @@
 {% load gravatar %}
 {% load humanize %}
 
+{% block meta-tags %}
+    {{ block.super }}
+    <meta http-equiv="refresh" content="30; URL={% url 'launchpad:orders' %}">
+{% endblock meta-tags %}
+
 {% block js-loads %}
     {{ block.super }}
 {% endblock js-loads %}
@@ -40,14 +45,20 @@
                                                     </thead>
                                                     <tbody>
                                                     {% for order in orders %}
-                                                        <tr>
+                                                        <tr {% if order.payment_status < 0 %}class="bg-light text-muted"{% endif %}>
                                                             <td scope="row" class="text-nowrap">{{ order.created_at|date }}</td>
                                                             <td class="text-right text-nowrap">{{ order.token_value.normalize|intcomma }} XTV</td>
                                                             <td class="text-right text-nowrap">US${{ order.usd_value.normalize|intcomma }}</td>
                                                             <td class="text-right text-nowrap">{{ order.payment_currency_value.normalize|intcomma }} {{ order.payment_currency }}</td>
-                                                            <td class="text-center text-nowrap"><i class="fa fa-question-circle"></i> <a href="{% url 'launchpad:payment' order_id=order.token_order_external_id %}">Instructions</a>&nbsp;&nbsp;|&nbsp;&nbsp;<i class="fa fa-info-circle"></i> <a href="{{ order.status_url }}" target="_blank">Status</a></td>
+                                                            <td class="text-center text-nowrap">
+                                                                {% if not order.payment_status or order.payment_status == 0 %}
+                                                                    <a href="{% url 'launchpad:payment' order_id=order.token_order_external_id %}">Instructions</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+                                                                {% endif %}
+                                                                <a href="{{ order.status_url }}" target="_blank">Status</a></td>
                                                             <td class="text-right text-nowrap">
-                                                                {% if order.payment_received and order.tokens_credited %}
+                                                                {% if order.payment_status < 0 %}
+                                                                    <div class="text-muted">Cancelled / Timed-out</div>
+                                                                {% elif order.payment_received and order.tokens_credited %}
                                                                     <div class="text-success">Order complete</div>
                                                                 {% else %}
                                                                     <div class="text-danger">Pending</div>

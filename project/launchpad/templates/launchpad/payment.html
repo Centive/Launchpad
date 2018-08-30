@@ -5,6 +5,13 @@
 {% load gravatar %}
 {% load humanize %}
 
+{% block meta-tags %}
+    {{ block.super }}
+    {% if not token_order.payment_status or token_order.payment_status >= 0 %}
+        <meta http-equiv="refresh" content="30; URL={% url 'launchpad:payment' order_id=token_order.token_order_external_id %}">
+    {% endif %}
+{% endblock meta-tags %}
+
 {% block js-loads %}
     {{ block.super }}
 {% endblock js-loads %}
@@ -22,23 +29,42 @@
                                         <h4>Payment</h4>
                                         <div class="row mt-4">
                                             <div class="col-lg-9">
-                                                <div class="mt-2">
-                                                    <h5>You are buying <b>{{ token_order.token_value.normalize|intcomma }} XTV</b></h5>
-                                                </div>
-                                                <div class="mt-4 p-3 bg-light border">
-                                                    <div class="row">
-                                                        <div class="col-lg-8">
-                                                            <h5>Please send</h5>
-                                                            <h4 class="text-danger"><b>{{ token_order.payment_currency_value.normalize }}</b> {{ token_order.payment_currency }}</h4>
-                                                            <h5>to this address:</h5>
-                                                            <h5 class="bg-success p-2 text-white text-monospace pre-scrollable">{{ token_order.payment_address }}</h5>
-                                                            <h6>This address was generated only for you and this particular transaction. Upon payment, your account will be credited with {{ token_order.token_value.normalize|intcomma }} XTV after {{ token_order.confirms_needed }} blockchain confirmations.</h6>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <img src="{{ token_order.qrcode_url }}">
+                                                {% if token_order.payment_status and token_order.payment_status < 0 %}
+                                                    <div class="mt-2">
+                                                        <h5>You wanted to buy <b>{{ token_order.token_value.normalize|intcomma }} XTV</b></h5>
+                                                    </div>
+                                                    <div class="mt-4 p-3 bg-light border">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <div class="alert alert-danger" role="alert">
+                                                                    This order has been cancelled <b>or</b> your payment has timed-out.
+                                                                </div>
+                                                                <h5>If you have already sent your payment for this order, you will receive an email with instructions for refund.</h5>
+                                                                <h6>You were originally instructed to send <b>{{ token_order.payment_currency_value.normalize }} {{ token_order.payment_currency }}</b> to the address <b>{{ token_order.payment_address }}</b><br/>
+                                                                    If you have troubles with your refund even after 7 days from the date of your payment, please reach out to us at <a href="mailto:support@centive.org">support@centive.org</a>.</h6>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                {% else %}
+                                                    <div class="mt-2">
+                                                        <h5>You are buying <b>{{ token_order.token_value.normalize|intcomma }} XTV</b></h5>
+                                                    </div>
+                                                    <div class="mt-4 p-3 bg-light border">
+                                                        <div class="row">
+                                                            <div class="col-lg-8">
+                                                                <h5>Please send</h5>
+                                                                <h4 class="text-danger"><b>{{ token_order.payment_currency_value.normalize }}</b> {{ token_order.payment_currency }}</h4>
+                                                                <h5>to this address:</h5>
+                                                                <h5 class="bg-success p-2 text-white text-monospace pre-scrollable">{{ token_order.payment_address }}</h5>
+                                                                <h6>This address was generated only for you and this particular transaction. Upon payment, your account will be credited with {{ token_order.token_value.normalize|intcomma }} XTV after {{ token_order.confirms_needed }} blockchain confirmations.</h6>
+                                                                <h6 class="text-danger">Please refer to the payment status page for the time limit for your payment.</h6>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <img src="{{ token_order.qrcode_url }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
                                                 <div class="mt-4">
                                                     <a href="{{ token_order.status_url }}" target="_blank"><button class="btn btn-alt btn-encourage">Payment Status</button></a>
                                                 </div>

@@ -24,4 +24,4 @@ class TokenOrdersQuerySet(models.query.QuerySet):
         return self.filter(**_filter_list)
 
     def pending(self):
-        return self.filter(Q(payment_received=False) | Q(tokens_credited=False))
+        return self.filter((Q(payment_status__isnull=True) | Q(payment_status__gte=0)) & (Q(payment_received=False) | Q(tokens_credited=False)))
