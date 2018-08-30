@@ -29,8 +29,8 @@
                                                 <div class="balance-circle bg-white shadow-sm"></div>
                                                 <div class="position-absolute" style="width:100%;">
                                                     <h1 class="font-weight-bold text-center">
-                                                        {% if token_holdings.token_value__sum %}
-                                                            {{ token_holdings.token_value__sum.normalize|intcomma }}
+                                                        {% if token_holdings.tokens %}
+                                                            {{ token_holdings.tokens.normalize|intcomma }}
                                                         {% else %}
                                                             0
                                                         {% endif %}

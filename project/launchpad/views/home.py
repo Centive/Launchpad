@@ -19,7 +19,7 @@ def home(request):
         _pending_orders = TokenOrders.objects.token_orders(customer_external_id=_user_id_external).pending()
         _token_holdings = TokenTransactions.objects.token_transactions(
             customer_external_id=_user_id_external
-        ).total_holdings()
+        ).holdings()
 
         return render(request, 'launchpad/home.html', {
             'pending_orders': _pending_orders,

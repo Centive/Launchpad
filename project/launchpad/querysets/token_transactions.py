@@ -13,5 +13,8 @@ class TokenTransactionsQuerySet(models.query.QuerySet):
 
         return self.filter(**_filter_list)
 
-    def total_holdings(self):
-        return self.aggregate(Sum('token_value'))
+    def deposits(self):
+        return self.filter(transaction_type__exact='Deposit')
+
+    def holdings(self):
+        return self.aggregate(tokens=Sum('token_value'))

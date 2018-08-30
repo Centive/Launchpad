@@ -49,6 +49,9 @@ class UserManager(BaseUserManager):
     def get_user_by_email(self, email):
         return super().get_queryset().get(email__exact=email)
 
+    def active_users(self):
+        return super().filter(is_active=True)
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     # Columns
