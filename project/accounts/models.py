@@ -46,6 +46,9 @@ class UserManager(BaseUserManager):
         except ObjectDoesNotExist:
             return False
 
+    def get_user_by_email(self, email):
+        return super().get_queryset().get(email__exact=email)
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     # Columns

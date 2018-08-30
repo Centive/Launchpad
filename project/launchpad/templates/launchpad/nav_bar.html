@@ -7,7 +7,7 @@
     <div class="col-md-10 text-right">
         <div class="d-inline-block mr-1">
             <div class="font-weight-bold">{{ user.email }}</div>
-            <div class="font-weight-bold"><a href="{% url 'accounts:logout' %}">Logout</a></div>
+            <div class="font-weight-bold"><a href="{% url 'accounts:password-reset-prelim' %}">Change password</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="{% url 'accounts:logout' %}">Logout</a></div>
         </div>
         <div class="d-inline">
             <img src="{% gravatar_url user.email 55 %}">

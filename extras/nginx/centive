@@ -1,12 +1,25 @@
 server {
-    listen 80;
+    listen 80 backlog=4096;
     server_name prime.centive.org;
+
+    access_log off;
+    sendfile on;
+    tcp_nopush on;
+    gzip off;
+    gzip_min_length 1024;
+
     rewrite ^/(.*) https://prime.centive.org/$1 permanent;
 }
 
 server {
-    listen 443 ssl;
+    listen 443 ssl backlog=4096;
     server_name prime.centive.org;
+
+    access_log off;
+    sendfile on;
+    tcp_nopush on;
+    gzip off;
+    gzip_min_length 1024;
 
     ssl_client_certificate /opt/centive/launchpad-config/ssl/cloudflare-origin-pull-ca.pem;
     ssl_verify_client off;
@@ -24,5 +37,7 @@ server {
     location / {
         include         uwsgi_params;
         uwsgi_pass      unix:/run/uwsgi/launchpad.sock;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "";
     }
 }

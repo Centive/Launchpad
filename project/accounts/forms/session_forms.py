@@ -16,11 +16,14 @@ class SessionLoginForm(forms.Form):
             Div(
                 ButtonHolder(
                     Submit('submit', 'Login'),
+                    css_class='col-lg-6'
                 ),
+                HTML('<div class="col-lg-6 text-right text-dark"><small><a href="/accounts/password-reset-request/">Forgot password?</a></small></div>'),
+                css_class='row'
             ),
             Div(
                 HTML(
-                    'Don\'t have a Centive account?&nbsp;&nbsp;&#9654; <a href="/accounts/signup-prelim/"><b>Signup here</b></a>',
+                    '<a class="text-dark">Don\'t have a Centive account?</a>&nbsp;&nbsp;&#9654; <a href="/accounts/signup-prelim/"><b>Signup here</b></a>',
                 ),
                 css_class='mt-5'
             ),
