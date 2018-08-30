@@ -2,9 +2,13 @@
 {% block title %}Stats - {{ block.super }}{% endblock title %}
 
 {% load static %}
-{% load crispy_forms_tags %}
 {% load gravatar %}
 {% load humanize %}
+
+{% block meta-tags %}
+    {{ block.super }}
+    <meta http-equiv="refresh" content="30; URL={% url 'launchpad:stats' %}">
+{% endblock meta-tags %}
 
 {% block body-content %}
     <div class="user-page d-flex">
