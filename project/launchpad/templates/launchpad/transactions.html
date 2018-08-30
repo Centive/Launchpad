@@ -20,13 +20,16 @@
                                 <div class="p-5">
                                     <div>
                                         <div>
-                                            <h4 class="d-inline-block mt-1">Completed Transactions</h4>
+                                            <h4 class="d-inline-block mt-1">Transactions</h4>
                                             <div class="d-inline-block pull-right mr-sm-0">
-                                                <a href="{% url 'launchpad:buy' %}"><button class="btn btn-sm btn-alt btn-encourage">Buy Tokens</button></a>
+                                                <a href="{% url 'launchpad:buy' %}"><button class="btn btn-sm btn-alt btn-encourage">Buy</button></a>
                                             </div>
                                         </div>
                                         <div class="row mt-4">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-12" style="overflow-x: auto;">
+                                                {% if transactions %}
+                                                    <div class="alert alert-success">You can withdraw your tokens to your own wallet upon completion of the ICO crowdsale.</div>
+                                                {% endif %}
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
