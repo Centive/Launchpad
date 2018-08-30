@@ -15,7 +15,8 @@ from project.settings import env
 def update(request):
     if request.method == 'POST':
         _param_errors = []
-        _send_email = False
+        _send_success_email = False
+        _send_cancel_email = False
 
         if 'merchant' not in request.POST or request.POST.get('merchant') != env('COINPAYMENTS_MERCHANT_ID'):
             _param_errors.append('merchant')
@@ -43,14 +44,17 @@ def update(request):
                                 )
 
                                 _transaction.save()
-                                _send_email = True
+                                _send_success_email = True
 
                             _order.payment_received = True
                             _order.tokens_credited = True
 
+                        elif _status == -1:
+                            _send_cancel_email = True
+
                         _order.save()
 
-                        if _send_email:
+                        if _send_success_email:
                             _message = AnymailMessage(
                                 to=[_email],
                                 tags=['Orders']
@@ -58,6 +62,22 @@ def update(request):
                             _message.template_id = 'a33525c2-8c99-4f8e-b7cd-b943e874c318'
                             _message.merge_global_data = {
                                 'token_value': ' '.join([str("{:,.2f}".format(float(_order.token_value))), 'XTV']),
+                            }
+                            _message.metadata = {'payment-address': _order.payment_address}
+                            _message.track_clicks = True
+
+                            _message.send()
+
+                        elif _send_cancel_email:
+                            _message = AnymailMessage(
+                                to=[_email],
+                                tags=['Orders']
+                            )
+                            _message.template_id = 'f39a80c3-a381-4a15-822b-32fb08debbe4'
+                            _message.merge_global_data = {
+                                'token_value': ' '.join([str("{:,.2f}".format(float(_order.token_value))), 'XTV']),
+                                'payment_currency_value': ' '.join([str(_order.payment_currency_value), _order.payment_currency]),
+                                'payment_address': _order.payment_address,
                             }
                             _message.metadata = {'payment-address': _order.payment_address}
                             _message.track_clicks = True
