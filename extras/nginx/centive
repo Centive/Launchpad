@@ -22,7 +22,7 @@ server {
     gzip_min_length 1024;
 
     ssl_client_certificate /opt/centive/launchpad-config/ssl/cloudflare-origin-pull-ca.pem;
-    ssl_verify_client off;
+    ssl_verify_client on;
     ssl_certificate /opt/centive/launchpad-config/ssl/ssl-centive-cert.pem;
     ssl_certificate_key /opt/centive/launchpad-config/ssl/ssl-centive-key.pem;
     ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
