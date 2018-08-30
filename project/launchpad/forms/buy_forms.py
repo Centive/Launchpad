@@ -64,7 +64,6 @@ class BuyForm(forms.Form):
         ('DASH', "DASH - Dash"),
         ('LTC', "LTC - Litecoin"),
         ('TRX', "TRX - Tronix"),
-        ('LTCT', "LTCT - Litecoin Testnet"),
     ))
 
     def clean(self):
@@ -78,7 +77,6 @@ class BuyForm(forms.Form):
             'DASH',
             'LTC',
             'TRX',
-            'LTCT',
         ]
 
         if _usd_value < 100:

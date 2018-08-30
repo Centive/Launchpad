@@ -1,13 +1,7 @@
-import random
-from secrets import token_urlsafe
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from launchpad.forms.buy_forms import BuyForm
-from launchpad.models import UserEligibilityRegistry, TokenOrders
-from launchpad.services.pyCoinPayments import CryptoPayments
-from project.settings import env
+from launchpad.models import TokenOrders
 
 
 @login_required
@@ -19,4 +13,7 @@ def payment(request, order_id):
         token_order_external_id=order_id,
     )
 
-    return render(request, 'launchpad/payment.html', {'token_order': _token_order[0]})
+    if len(_token_order) > 0:
+        return render(request, 'launchpad/payment.html', {'token_order': _token_order[0]})
+    else:
+        return redirect('launchpad:home')

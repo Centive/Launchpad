@@ -21,7 +21,6 @@ def login_view(request):
             if _user is not None:
                 auth.login(request, _user)
                 try:
-                    print('Redirecting')
                     return redirect(_next or settings.LOGIN_REDIRECT_URL)
                 except NoReverseMatch:
                     return redirect(settings.LOGIN_REDIRECT_URL)
