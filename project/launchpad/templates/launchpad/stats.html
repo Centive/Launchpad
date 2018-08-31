@@ -20,21 +20,21 @@
                             <div class="col-md-12">
                                 <div class="p-5">
                                     <div>
-                                        <h3>Orders</h3>
+                                        <h3 class="al-center-sm">Orders</h3>
                                         <div class="row mt-4">
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3 rounded border bg-light text-center p-5 pt-2 pb-2">
                                                 <h5 class="font-weight-bold">Total Orders</h5>
                                                 <h1>{{ orders.total|intcomma }}</h1>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3 rounded border bg-light text-center p-5 pt-2 pb-2">
                                                 <h5 class="font-weight-bold">Completed</h5>
                                                 <h1>{{ orders.completed|intcomma }}</h1>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3 rounded border bg-light text-center p-5 pt-2 pb-2">
                                                 <h5 class="font-weight-bold">Pending</h5>
                                                 <h1>{{ orders.pending|intcomma }}</h1>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3 rounded border bg-light text-center p-5 pt-2 pb-2">
                                                 <h5 class="text-danger font-weight-bold">Cancelled</h5>
                                                 <h1 class="text-danger">{{ orders.cancelled|intcomma }}</h1>
                                             </div>
@@ -42,13 +42,13 @@
                                     </div>
                                     <hr class="hr">
                                     <div>
-                                        <h3>Sales</h3>
+                                        <h3 class="al-center-sm">Sales</h3>
                                         <div class="row mt-4">
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3 rounded border bg-light text-center p-5 pt-2 pb-2">
                                                 <h5 class="font-weight-bold">Total Tokens</h5>
                                                 <h1>{{ sales.tokens.normalize|intcomma }}</h1>
                                             </div>
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3 rounded border bg-light text-center p-5 pt-2 pb-2">
                                                 <h5 class="font-weight-bold">US$</h5>
                                                 <h1>{{ orders.stats.usd_value.normalize|intcomma }}</h1>
                                             </div>
@@ -56,9 +56,9 @@
                                     </div>
                                     <hr class="hr">
                                     <div>
-                                        <h3>Users</h3>
+                                        <h3 class="al-center-sm">Users</h3>
                                         <div class="row mt-4">
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-3 rounded border bg-light text-center p-5 pt-2 pb-2">
                                                 <h5 class="font-weight-bold">Total users</h5>
                                                 <h1>{{ users.total }}</h1>
                                             </div>

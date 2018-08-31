@@ -14,7 +14,7 @@ class BuyForm(forms.Form):
         self.helper.layout = Layout(
             Div(
                 Div(
-                    HTML('<div>How much do you want to purchase for?</div>'),
+                    HTML('<div>How much do you want to buy for?</div>'),
                     Div(
                         PrependedText('usd_value', '<b>US Dollar ($)</b>', css_class='form-control-lg no-border'),
                         css_class='mr-lg-5 mr-sm-0',
@@ -24,7 +24,7 @@ class BuyForm(forms.Form):
                 Div(
                     HTML('<div>You will receive</div>'),
                     Div(
-                        HTML('<h1><span class="text-muted">&#9654;</span> <a id="token-receive-estimate">10,000</a> <small><b>XTV</b></small></h1>'),
+                        HTML('<h1><span class="text-muted">&#9654;</span> <a id="token-receive-estimate">1,000</a> <small><b>XTV</b></small></h1>'),
                     ),
                     Div(
                         HTML('<p id="minimum-message" class="text-danger" style="display:none;">for a minimum purchase of US$100</p>'),
@@ -55,7 +55,7 @@ class BuyForm(forms.Form):
             ),
         )
 
-    usd_value = forms.FloatField(label='', initial=1000, required=True)
+    usd_value = forms.FloatField(label='', initial=100, required=True)
     payment_currency = forms.ChoiceField(label='', required=True, choices=(
         ('BTC', "BTC - Bitcoin"),
         ('BCH', "BCH - Bitcoin Cash"),
