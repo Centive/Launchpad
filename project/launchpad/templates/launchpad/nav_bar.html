@@ -21,6 +21,7 @@
             <a href="{% url 'launchpad:orders' %}" {% if page_cat == 'orders' %}class="active"{% endif %}>Orders</a>
             <a href="{% url 'launchpad:transactions' %}" {% if page_cat == 'transactions' %}class="active"{% endif %}>Transactions</a>
             <a href="{% url 'launchpad:verification' %}" {% if page_cat == 'verification' %}class="active"{% endif %}>Verification</a>
+            <a href="{% url 'launchpad:withdraw' %}" {% if page_cat == 'withdraw' %}class="active"{% endif %}>Withdraw</a>
             {% if user.is_staff %}
                 <a href="{% url 'launchpad:stats' %}" {% if page_cat == 'stats' %}class="active"{% endif %}>Crowdsale Stats</a>
             {% endif %}

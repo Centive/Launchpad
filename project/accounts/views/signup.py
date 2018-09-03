@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from accounts.forms.signup_forms import SignupPrelimForm, SignupFinishSetupForm
+from accounts.models import UserProfile
 from accounts.services.exceptions import ServiceError
 
 
@@ -84,6 +85,8 @@ def signup_finish_setup(request, **kwargs):
                         with transaction.atomic():
                             _user = _user_model.objects.create_user(_email, _password)
                             _user.save()
+                            _user_profile = UserProfile(user=_user)
+                            _user_profile.save()
 
                     except (IntegrityError, ServiceError):
                         # TODO: Notify us of error

@@ -134,28 +134,12 @@ class UserProfile(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-    first_name = models.CharField(
-        'First name',
-        max_length=255
-    )
-    last_name = models.CharField(
-        'Last name',
-        max_length=255
-    )
-    country = models.ForeignKey(
-        PresenceCountry,
-        on_delete=models.PROTECT
-    )
-    phone = models.IntegerField(
-        'Phone number'
+    withdrawal_address = models.CharField(
+        'Withdrawal address',
+        max_length=255,
+        null=True,
     )
 
     # Configuration
     #
     objects = UserProfileQuerySet.as_manager()
-
-    def __str__(self):
-        return '%s %s (%s)' % (self.first_name, self.last_name, self.user_id)
-
-    def get_full_phone_number(self):
-        return '+%s%s' % (self.country.dialing_code, self.phone)

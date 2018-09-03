@@ -19,7 +19,7 @@ class BuyForm(forms.Form):
                         PrependedText('usd_value', '<b>US Dollar ($)</b>', css_class='form-control-lg no-border'),
                         css_class='mr-lg-5 mr-sm-0',
                     ),
-                    css_class='col-lg-4',
+                    css_class='col-lg-6',
                 ),
                 Div(
                     HTML('<div>You will receive</div>'),
@@ -30,7 +30,7 @@ class BuyForm(forms.Form):
                         HTML('<p id="minimum-message" class="text-danger" style="display:none;">for a minimum purchase of US$100</p>'),
                         style='height: 20px;'
                     ),
-                    css_class='col-lg-5',
+                    css_class='col-lg-6',
                 ),
                 css_class='row'
             ),
@@ -41,7 +41,7 @@ class BuyForm(forms.Form):
                         Field('payment_currency', css_class='form-control-lg no-border'),
                         css_class='mr-lg-5 mr-sm-0',
                     ),
-                    css_class='col-lg-4',
+                    css_class='col-lg-6',
                 ),
                 css_class='mt-2 row'
             ),

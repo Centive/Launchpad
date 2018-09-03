@@ -46,13 +46,26 @@
                         {% include 'launchpad/nav_bar.html' with page_cat='orders' %}
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="p-5">
-                                    <div>
-                                        <h4 class="al-center-sm">Buy Tokens</h4>
-                                        <div class="row mt-4">
-                                            <div class="col-lg-12">
-                                                {% crispy buy_form %}
-                                            </div>
+                                <div class="p-2">
+                                    <div class="row mt-4">
+                                        <div class="col-lg-7 pl-lg-5 pl-md-3 pl-sm-3">
+                                            <h4 class="al-center-sm">Buy Tokens</h4>
+                                            {% crispy buy_form %}
+                                        </div>
+                                        <div class="col-lg-4 mt-x4 mt-sm-4 mt-md-5 mt-lg-0 ml-lg-5 ml-sm-0 pb-3 border-left">
+                                            <h4 class="al-center-sm">Token Details</h4>
+                                            <h6 class="font-weight-bold m-0">Token Price</h6>
+                                            <h6 class="m-0 text-monospace">$0.01 per XTV</h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Type</h6>
+                                            <h6 class="m-0 text-monospace">Ethereum (ERC20)</h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Contract Address (Click for Etherscan token page)</h6>
+                                            <h6 class="m-0 text-monospace"><a href="https://etherscan.io/token/0xda9da458c3dbec5797ef5b07a6b3199cbc045b18" target="_blank">0xda9da458c3dbec5797ef5b07a6b3199cbc045b18</a></h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Symbol</h6>
+                                            <h6 class="m-0 text-monospace">XTV</h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Decimals</h6>
+                                            <h6 class="m-0 text-monospace">18 digits</h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Token Home</h6>
+                                            <h6 class="m-0 text-monospace"><a href="https://centive.org" target="_blank">centive.org</a></h6>
                                         </div>
                                     </div>
                                 </div>

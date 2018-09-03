@@ -1,0 +1,76 @@
+{% extends 'launchpad/body_base.html' %}
+{% block title %}Buy XTV - {{ block.super }}{% endblock title %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{% load gravatar %}
+
+{% block js-loads %}
+    {{ block.super }}
+    <script src="{% static 'launchpad/js/plugins/jsSHA/sha3.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            var web3 = new Web3();
+
+            var displayAddressHelper = function (address){
+                if(web3.isAddress(address)){
+                    $('#address-helper-correct').show();
+                    $('#address-helper-wrong').hide();
+                } else {
+                    $('#address-helper-correct').hide();
+                    $('#address-helper-wrong').show();
+                }
+            };
+
+            displayAddressHelper($('#id_withdrawal_address').val());
+
+            $('#id_withdrawal_address').on('input propertychange paste', function (){
+                var address = $(this).val();
+                displayAddressHelper(address);
+            });
+        });
+    </script>
+{% endblock js-loads %}
+
+{% block body-content %}
+    <div class="user-page d-flex">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                        {% include 'launchpad/nav_bar.html' with page_cat='withdraw' %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="p-lg-5 p-md-3 p-sm-3 p-3">
+                                    <div>
+                                        <div class="rounded p-3 shadow-sm bg-light-alternet">
+                                            <h5 class="font-weight-bold">Important Information</h5>
+                                            <p>
+                                                You will be able to withdraw your tokens once the ICO crowdsale comes to an end.<br />
+                                                As of now, the crowdsale comes to an end on <b>31st October 2018.</b><br />
+                                                Meanwhile, please complete the <a href="{% url 'launchpad:verification' %}">verification process (KYC)</a> and keep your withdrawal address updated.
+                                            </p>
+                                            <hr class="hr mt-1 mb-2" />
+                                            <p class="text-danger">
+                                                Do not use an exchange address (like Binance or Bitfinex). Any tokens sent to an exchange address will be lost forever.<br />
+                                                Instead, you can use <a href="https://www.myetherwallet.com/" target="_blank">MyEtherWallet</a> or your own <a href="https://www.ethereum.org/" target="_blank">downloaded Ethereum wallet</a>.
+                                            </p>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-lg-6 al-center-sm">
+                                                {% if update_success %}
+                                                    <div class="alert alert-success">Successfully updated withdrawal address.</div>
+                                                {% endif %}
+                                                {% crispy address_update_form %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body-content %}

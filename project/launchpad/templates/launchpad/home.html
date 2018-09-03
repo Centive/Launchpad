@@ -5,10 +5,6 @@
 {% load gravatar %}
 {% load humanize %}
 
-{% block js-loads %}
-    {{ block.super }}
-{% endblock js-loads %}
-
 {% block body-content %}
     <div class="user-page d-flex">
         <div class="container">
@@ -17,17 +13,18 @@
                         {% include 'launchpad/nav_bar.html' with page_cat='home' %}
                         <div class="row">
                             <div class="col-lg-12" style="background-image: url('{% static 'launchpad/img/patterns/subtle-crisscross.jpg' %}');">
-                                <div class="p-5">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <h4 class="text-center font-weight-light">Your balance</h4>
+                                <div class="p-2">
+                                    {% if pending_orders %}
+                                        <div class="alert alert-warning border text-center">
+                                            You have <a href="{% url 'launchpad:orders' %}"><b>{{ pending_orders|length }} pending order{{ pending_orders|length|pluralize:',s' }}</b></a>
                                         </div>
-                                    </div>
-                                    <div class="row middle-box-flex mt-3">
+                                    {% endif %}
+                                    <div class="row mt-3">
                                         <div class="col-lg-6">
                                             <div class="position-relative col-centered middle-box-flex">
                                                 <div class="balance-circle bg-white shadow-sm"></div>
                                                 <div class="position-absolute" style="width:100%;">
+                                                    <h5 class="text-center font-weight-light">Your balance</h5>
                                                     <h1 class="font-weight-bold text-center">
                                                         {% if token_holdings.tokens %}
                                                             {{ token_holdings.tokens.normalize|intcomma }}
@@ -36,21 +33,34 @@
                                                         {% endif %}
                                                     </h1>
                                                     <h4 class="font-weight-bold text-center">XTV</h4>
+                                                    <div class="text-center"><a href="{% url 'launchpad:buy' %}"><button class="btn btn-alt btn-lg btn-encourage">Buy Tokens</button></a></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-2 mt-x2 mt-sm-3 mt-md-3 mt-lg-0">
-                                            <hr class="hr" />
-                                        </div>
-                                        <div class="col-lg-4 mt-x2 mt-sm-3 mt-md-3 mt-lg-0 text-center">
-                                            <div>
-                                                <a href="{% url 'launchpad:buy' %}"><button class="col-centered btn btn-alt btn-lg btn-encourage">Buy Tokens</button></a>
-                                            </div>
-                                            {% if pending_orders %}
-                                                <div class="mt-3">
-                                                    You have <a href="{% url 'launchpad:orders' %}"><b>{{ pending_orders|length }} pending order{{ pending_orders|length|pluralize:',s' }}</b></a>
-                                                </div>
-                                            {% endif %}
+                                        <div class="col-lg-5 rounded bg-white shadow-sm mt-x2 mt-sm-3 mt-md-3 mt-lg-0 ml-lg-5 ml-sm-0 pb-3 pt-3">
+                                            <h4 class="al-center-sm">Your Withdrawal Address</h4>
+                                            <h6 class="bg-light rounded border p-2 text-monospace mb-0" style="cursor:default;">
+                                                {% if user_profile.withdrawal_address %}
+                                                    {{ user_profile.withdrawal_address }}
+                                                {% else %}
+                                                    You have not set a withdrawal address yet.
+                                                {% endif %}
+                                            </h6>
+                                            <div class="al-center-sm mt-0"><span class="text-muted">&#9654;</span> <a href="{% url 'launchpad:withdraw' %}">Change address</a></div>
+                                            <hr class="hr mt-4 mb-4" />
+                                            <h4 class="al-center-sm">Token Details</h4>
+                                            <h6 class="font-weight-bold m-0">Type</h6>
+                                            <h6 class="m-0 text-monospace">Ethereum (ERC20)</h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Contract Address (Click for Etherscan token page)</h6>
+                                            <h6 class="m-0 text-monospace"><a href="https://etherscan.io/token/0xda9da458c3dbec5797ef5b07a6b3199cbc045b18" target="_blank">0xda9da458c3dbec5797ef5b07a6b3199cbc045b18</a></h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Symbol</h6>
+                                            <h6 class="m-0 text-monospace">XTV</h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Decimals</h6>
+                                            <h6 class="m-0 text-monospace">18 digits</h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Token Price</h6>
+                                            <h6 class="m-0 text-monospace">$0.01 per XTV</h6>
+                                            <h6 class="font-weight-bold m-0 mt-3">Token Home</h6>
+                                            <h6 class="m-0 text-monospace"><a href="https://centive.org" target="_blank">centive.org</a></h6>
                                         </div>
                                     </div>
                                 </div>
